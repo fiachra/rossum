@@ -1,0 +1,31 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  name        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  team        Team?    @relation(fields: [teamId], references: [id])
+  teamId      String?
+  isPrimary   Boolean  @default(false)
+  primaryTeam Team?    @relation("TeamPrimaryUser")
+}
+
+model Team {
+  id          String   @id @default(cuid())
+  name        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  users       User[]
+  primaryUser User?    @relation("TeamPrimaryUser", fields: [primaryId], references: [id])
+  primaryId   String?  @unique
+}
