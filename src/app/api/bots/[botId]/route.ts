@@ -6,8 +6,9 @@ const botController = new BotController()
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { botId: string } }
+  { params }: { params: Promise<{ botId: string }> }
 ) {
+  const botId = (await params).botId
   try {
     const session = await auth()
     if (!session?.user?.id) {
@@ -17,7 +18,7 @@ export async function GET(
       )
     }
 
-    const result = await botController.getBotById(params.botId, session.user.id)
+    const result = await botController.getBotById(botId, session.user.id)
 
     if (!result.success) {
       return NextResponse.json(
@@ -37,8 +38,9 @@ export async function GET(
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { botId: string } }
+  { params }: { params: Promise<{ botId: string }> }
 ) {
+  const botId = (await params).botId
   try {
     const session = await auth()
     if (!session?.user?.id) {
@@ -49,7 +51,7 @@ export async function PATCH(
     }
 
     const body = await req.json()
-    const result = await botController.updateBot(params.botId, body, session.user.id)
+    const result = await botController.updateBot(botId, body, session.user.id)
 
     if (!result.success) {
       return NextResponse.json(
@@ -69,8 +71,9 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { botId: string } }
+  { params }: { params: Promise<{ botId: string }> }
 ) {
+  const botId = (await params).botId
   try {
     const session = await auth()
     if (!session?.user?.id) {
@@ -80,7 +83,7 @@ export async function DELETE(
       )
     }
 
-    const result = await botController.deleteBot(params.botId, session.user.id)
+    const result = await botController.deleteBot(botId, session.user.id)
 
     if (!result.success) {
       return NextResponse.json(
