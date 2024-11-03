@@ -1,0 +1,12 @@
+### Get new access token using refresh token
+# @name getToken
+POST {{googleAuthUrl}}/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id={{clientId}}
+&client_secret={{clientSecret}}
+&refresh_token={{refreshToken}}
+&grant_type=refresh_token
+
+### Store the access token in a variable
+@accessToken = {{getToken.response.body.access_token}}
