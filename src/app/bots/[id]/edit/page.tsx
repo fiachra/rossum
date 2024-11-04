@@ -2,21 +2,24 @@
 import { useEffect, useState } from 'react'
 import BotForm from '../../BotForm'
 import { Spinner } from '@/components/ui/spinner';
+import { use } from 'react';
 
+type Params = Promise<{ id: string  }>
 
 async function getBot(id: string) {
-  const res = await fetch(`http://localhost:3000/api/bots/${id}`, { cache: 'no-store' })
+  const res = await fetch(`/api/bots/${id}`, { cache: 'no-store' })
   if (!res.ok) throw new Error('Failed to fetch bot')
   return res.json()
 }
 
-export default function EditBotPage({ params }: { params: { id: string } }) {
+export default function EditBotPage({ params }: { params: Params }) {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [bot, setBot] = useState<any>(null)
+  const parameters = use(params)
 
   useEffect(() => {
-    getBot(params.id).then(setBot)
-  }, [params.id])
+    getBot(parameters.id).then(setBot)
+  }, [parameters.id])
 
   if (!bot) return <div className="flex h-screen items-center justify-center"><Spinner show /></div>
 
