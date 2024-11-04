@@ -44,7 +44,7 @@ export function MainNav() {
               Your Bots
             </NavigationMenuLink>
           </NavigationMenuItem>
-          <NavigationMenuItem>
+          {/* <NavigationMenuItem>
             <NavigationMenuTrigger className="px-2">
               Server Side
             </NavigationMenuTrigger>
@@ -61,7 +61,7 @@ export function MainNav() {
                 </ListItem>
               </ul>
             </NavigationMenuContent>
-          </NavigationMenuItem>
+          </NavigationMenuItem> */}
         </NavigationMenuList>
       </NavigationMenu>
     </div>
