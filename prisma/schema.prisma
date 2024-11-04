@@ -115,13 +115,14 @@ model UserTeam {
 }
 
 model Bot {
-  id         String   @id @default(cuid())
-  name       String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  ownerId    String
-  owner      User     @relation(fields: [ownerId], references: [id])
-  teamId     String?
-  team       Team?    @relation(fields: [teamId], references: [id])
-  dataFolder String
+  id          String   @id @default(cuid())
+  description String?
+  name        String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  ownerId     String
+  owner       User     @relation(fields: [ownerId], references: [id])
+  teamId      String?
+  team        Team?    @relation(fields: [teamId], references: [id])
+  dataFolder  String?
 }

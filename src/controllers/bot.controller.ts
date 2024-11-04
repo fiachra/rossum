@@ -12,6 +12,8 @@ export class BotController {
       const bot = await this.botService.createBot(input, userId)
       return { success: true, data: bot }
     } catch (error) {
+
+      console.log(error)
       return {
         success: false,
         error: error instanceof Error ? error.message : 'Failed to create bot'

@@ -1,9 +1,11 @@
 "use client"
 
-// import Image from "next/image"
+import Image from "next/image"
 
 import { cn } from "@/lib/utils"
 // import CustomLink from "./custom-link"
+import { Button } from "@/components/ui/button"
+
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -14,24 +16,34 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import React from "react"
+import Link from "next/link"
 // import { Button } from "./ui/button"
 
 export function MainNav() {
   return (
     <div className="flex items-center gap-4">
-      {/* <CustomLink href="/">
+      
         <Button variant="ghost" className="p-0">
           <Image
-            src="/logo.png"
+            src="/Icon.png"
             alt="Home"
             width="32"
             height="32"
             className="min-w-8"
           />
+           <Link href="/">Rossum AI</Link>
         </Button>
-      </CustomLink> */}
+
       <NavigationMenu>
         <NavigationMenuList>
+        <NavigationMenuItem>
+            <NavigationMenuLink
+              href="/bots"
+              className={navigationMenuTriggerStyle()}
+            >
+              Your Bots
+            </NavigationMenuLink>
+          </NavigationMenuItem>
           <NavigationMenuItem>
             <NavigationMenuTrigger className="px-2">
               Server Side
@@ -49,14 +61,6 @@ export function MainNav() {
                 </ListItem>
               </ul>
             </NavigationMenuContent>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink
-              href="/client-example"
-              className={navigationMenuTriggerStyle()}
-            >
-              Client Side
-            </NavigationMenuLink>
           </NavigationMenuItem>
         </NavigationMenuList>
       </NavigationMenu>
