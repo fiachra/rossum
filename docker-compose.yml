@@ -1,0 +1,40 @@
+version: '3'
+services:
+  db:
+    image: postgres:15
+    command: ["postgres", "-c", "log_statement=all", "-c", "log_destination=stderr"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      POSTGRES_DB: rossum-data
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5555:5432"
+
+  app:
+    # build: 
+    #   context: .
+    #   secrets:
+    #     - npmrc
+    image: europe-west2-docker.pkg.dev/rossum-440519/ryebridge-repo/rossum-app:0.0.1
+    environment:
+    - DATABASE_URL=postgresql://postgres:password@db:5555/rossum-data?schema=public
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+# secrets:
+#   npmrc:
+#     file: ~/.npmrc
+          
+volumes:
+  pgdata:
+  node_modules:
+  storage_data:
